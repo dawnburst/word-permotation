@@ -1,13 +1,21 @@
 package com.dawn.wordpermutation.service;
 
-import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class WordPermutationService {
+
+    public void removeChars(){
+        try {
+            CharacterSetUtil.removeHebrewSpecialCharacters();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public List<String> perms(String string) {
 

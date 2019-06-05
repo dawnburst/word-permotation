@@ -20,4 +20,9 @@ public class WordPermutationResource {
     public List<String> getAllPermutation(@RequestParam String word) {
         return wordPermutationService.perms(word);
     }
+
+    @GetMapping("removeChars")
+    public void removeChars(){
+        wordPermutationService.removeChars();
+    }
 }
