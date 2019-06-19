@@ -1,13 +1,19 @@
 package com.dawn.wordpermutation.service;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.paukov.combinatorics3.Generator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -84,5 +90,29 @@ public class WordPermutationService {
       }
     }
     return false;
+  }
+
+
+  public Set<String> getWordCombination(String word) {
+
+    ImmutableList<Character> characters = Lists.charactersOf(word);
+
+    Set<String> listOfCombination = IntStream.range(2, characters.size() + 1)
+        .mapToObj(i -> Generator
+            .combination(characters)
+            .simple(i)
+            .stream()
+            .map(list -> list
+                .stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining()))
+            .collect(Collectors.toList()))
+        .flatMap(Collection::stream)
+        .collect(Collectors.toSet());
+
+    listOfCombination.forEach(System.out::println);
+
+    System.out.println("Numbers of combinations: " + listOfCombination.size());
+    return listOfCombination;
   }
 }
